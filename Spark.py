@@ -25,4 +25,7 @@ transformed = sentences_rdd.map(lambda s: s.upper())
 for line in transformed.take(100):
     print(line)
 
+output_path = "hdfs:///tmp/week4_output"
+transformed.saveAsTextFile(output_path)
+
 spark.stop()
