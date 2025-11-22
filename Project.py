@@ -2,6 +2,7 @@
 
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import VectorIndexer
 from pyspark.ml.regression import DecisionTreeRegressor
 import happybase
 
@@ -16,13 +17,21 @@ diamonds_df = diamonds_df.na.drop()  # Drop rows with null values
 
 diamonds_df.show(10)
 
-# Step 4: Prepare the data for MLlib by assembling features into a vector
-assembler = VectorAssembler(
+assembler = VectorIndexer(
     inputCols=["carat", "cut", "color", "clarity"],
     outputCol="features",
-    handleInvalid="skip"  # Skip rows with null values
+    maxCategories=10
 )
-assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
+assembled_df = assembler.fit(diamonds_df) # .select("features", "price")
+
+
+# Step 4: Prepare the data for MLlib by assembling features into a vector
+# assembler = VectorAssembler(
+#     inputCols=["carat", "cut", "color", "clarity"],
+#     outputCol="features",
+#     handleInvalid="skip"  # Skip rows with null values
+# )
+# assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
 
 assembled_df.show(10)
 
