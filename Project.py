@@ -10,28 +10,21 @@ import happybase
 spark = SparkSession.builder.appName("SoerFinalProject").enableHiveSupport().getOrCreate()
 
 # Step 2: Load the data from the Hive table 'diamonds' into a Spark DataFrame
-diamonds_df = spark.sql("SELECT carat, cut, color, clarity, price FROM diamonds")
+diamonds_df = spark.sql("SELECT carat, depth, tb, x, y, z, price FROM diamonds")
 
 # Step 3: Handle null values by either dropping or filling them
 diamonds_df = diamonds_df.na.drop()  # Drop rows with null values
 
 diamonds_df.show(10)
 
-assembler = VectorIndexer(
-    inputCols=["carat", "cut", "color", "clarity"],
-    outputCol="features",
-    maxCategories=10
-)
-assembled_df = assembler.fit(diamonds_df) # .select("features", "price")
-
 
 # Step 4: Prepare the data for MLlib by assembling features into a vector
-# assembler = VectorAssembler(
-#     inputCols=["carat", "cut", "color", "clarity"],
-#     outputCol="features",
-#     handleInvalid="skip"  # Skip rows with null values
-# )
-# assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
+assembler = VectorAssembler(
+    inputCols=["carat", "depth", "tb", "x", "y", "z"],
+    outputCol="features",
+    handleInvalid="skip"  # Skip rows with null values
+)
+assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
 
 assembled_df.show(10)
 
