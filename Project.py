@@ -1,11 +1,12 @@
 
+
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import DecisionTreeRegressor
 import happybase
 
 # Step 1: Create a Spark session
-spark = SparkSession.builder.appName("Soer Final Project").enableHiveSupport().getOrCreate()
+spark = SparkSession.builder.appName("SoerFinalProject").enableHiveSupport().getOrCreate()
 
 # Step 2: Load the data from the Hive table 'diamonds' into a Spark DataFrame
 diamonds_df = spark.sql("SELECT carat, cut, color, clarity, depth, table, x, y, z, price FROM diamonds")
