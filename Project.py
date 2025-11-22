@@ -4,6 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.feature import VectorIndexer
 from pyspark.ml.regression import DecisionTreeRegressor
+from pyspark.ml.regression import LinearRegression
 import happybase
 
 # Step 1: Create a Spark session
@@ -24,7 +25,7 @@ assembler = VectorAssembler(
     outputCol="features",
     handleInvalid="skip"  # Skip rows with null values
 )
-assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
+assembled_df = assembler.transform(diamonds_df).select("features", "price")
 
 assembled_df.show(10)
 
@@ -32,7 +33,7 @@ assembled_df.show(10)
 train_data, test_data = assembled_df.randomSplit([0.7, 0.3])
 
 # Step 6: Initialize and train a Linear Regression model
-lr = DecisionTreeRegressor(labelCol="price",featuresCol="features")
+lr = LinearRegression(labelCol="price",featuresCol="features")
 lr_model = lr.fit(train_data)
 
 # Step 7: Evaluate the model on the test data
