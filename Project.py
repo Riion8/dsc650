@@ -22,7 +22,9 @@ assembler = VectorAssembler(
     outputCol="features",
     handleInvalid="skip"  # Skip rows with null values
 )
-assembled_df = assembler.transform(diamonds_df).select("features", "price")
+assembled_df = assembler.transform(diamonds_df) # .select("features", "price")
+
+assembled_df.show(10)
 
 # Step 5: Split the data into training and testing sets
 train_data, test_data = assembled_df.randomSplit([0.7, 0.3])
