@@ -18,7 +18,7 @@ diamonds_df.show(10)
 
 # Step 4: Prepare the data for MLlib by assembling features into a vector
 assembler = VectorAssembler(
-    inputCols=["carat","cut","color","clarity","depth","x","y","z"],
+    inputCols=["carat", "cut", "color", "clarity", "depth", "x", "y", "z"],
     outputCol="features",
     handleInvalid="skip"  # Skip rows with null values
 )
