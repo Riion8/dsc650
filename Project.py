@@ -13,7 +13,7 @@ diamonds_df = spark.sql("SELECT carat, cut, color, clarity, depth, table, x, y, 
 # Step 3: Handle null values by either dropping or filling them
 diamonds_df = diamonds_df.na.drop()  # Drop rows with null values
 
-print(diamonds_df.head)
+print(diamonds_df.head())
 
 # Step 4: Prepare the data for MLlib by assembling features into a vector
 assembler = VectorAssembler(
