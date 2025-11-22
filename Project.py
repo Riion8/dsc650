@@ -8,12 +8,14 @@ import happybase
 spark = SparkSession.builder.appName("Soer Final Project").enableHiveSupport().getOrCreate()
 
 # Step 2: Load the data from the Hive table 'diamonds' into a Spark DataFrame
-diamonds_df = spark.sql("SELECT carat, cut, color, clarity, depth, table, x, y, z, price  FROM diamonds")
+diamonds_df = spark.sql("SELECT carat, cut, color, clarity, depth, table, x, y, z, price FROM diamonds")
+
+print(diamonds_df.head())
 
 # Step 3: Handle null values by either dropping or filling them
 diamonds_df = diamonds_df.na.drop()  # Drop rows with null values
 
-print(diamonds_df.head())
+diamonds_df.show(10)
 
 # Step 4: Prepare the data for MLlib by assembling features into a vector
 assembler = VectorAssembler(
