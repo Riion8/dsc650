@@ -13,6 +13,8 @@ grades_df = spark.sql("SELECT test1, test2, test3, test4, final_score FROM grade
 # Step 3: Handle null values by either dropping or filling them
 grades_df = grades_df.na.drop()  # Drop rows with null values
 
+grades_df.show(10)
+
 # Step 4: Prepare the data for MLlib by assembling features into a vector
 assembler = VectorAssembler(
     inputCols=["test1", "test2", "test3", "test4"],
